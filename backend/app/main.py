@@ -1,4 +1,6 @@
 from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
+
 
 # Load environment variables before importing app modules
 load_dotenv()
@@ -20,7 +22,7 @@ app = FastAPI(
 # CREATE DATABASE TABLES
 # -------------------------
 Base.metadata.create_all(bind=engine)
-
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 # -------------------------
 # CORS
 # -------------------------
