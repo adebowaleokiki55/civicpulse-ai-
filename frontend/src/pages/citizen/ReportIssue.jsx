@@ -391,7 +391,7 @@ function ReportIssue() {
 
                         <button
 
-                            onClick={() => navigate("/citizen/my-reports")}
+                           onClick={() => navigate("/my-reports")}
 
                             className="mt-6 bg-blue-600 text-white w-full p-3 rounded-xl"
 
