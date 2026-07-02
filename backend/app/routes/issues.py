@@ -68,8 +68,12 @@ def create_issue(
     # AI ANALYSIS (SAFE)
     # -------------------------
     try:
-        category, severity, department = analyze_issue(description)
-        confidence = 85  # fallback safe score
+        category, severity, department, confidence = analyze_issue(
+            title,
+            description,
+        )
+
+        
     except Exception:
         category, severity, department = "Other", "Medium", "General Services"
         confidence = 50
