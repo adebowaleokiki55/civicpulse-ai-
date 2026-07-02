@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 
-import api from "../services/api";
+import api, { API_BASE_URL } from "../services/api";
 
 import Loading from "../components/Loading";
 import StatusBadge from "../components/StatusBadge";
@@ -14,6 +14,8 @@ function IssueDetails() {
     const [loading, setLoading] = useState(true);
 
     const [issue, setIssue] = useState(null);
+    const BACKEND_URL =
+    import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
     useEffect(() => {
 
@@ -112,6 +114,7 @@ function IssueDetails() {
         );
 
     }
+    console.log(issue);
 
     return (
 
@@ -141,17 +144,19 @@ function IssueDetails() {
 
                             {
 
-                                issue.image_url ?
+                                issue.image ? 
 
                                 (
 
                                     <img
 
-                                        src={issue.image_url}
+                                        src={`${API_BASE_URL}/uploads/${issue.image}`}
 
                                         alt={issue.title}
 
                                         className="w-full h-full object-cover"
+
+                                        
 
                                     />
 

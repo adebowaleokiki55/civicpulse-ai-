@@ -1,9 +1,9 @@
 import axios from "axios";
 
+export const API_BASE_URL = "https://civicpulse-ai-2ako.onrender.com";
+
 const api = axios.create({
-
-    baseURL: "https://civicpulse-ai-2ako.onrender.com"
-
+    baseURL: API_BASE_URL
 });
 
 export default api;
