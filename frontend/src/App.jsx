@@ -12,7 +12,6 @@ import Departments from "./pages/Departments";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import IssueDetails from "./pages/IssueDetails";
 
-
 // Citizen Pages
 import Home from "./pages/citizen/Home";
 import ReportIssue from "./pages/citizen/ReportIssue";
@@ -21,45 +20,53 @@ import MyReports from "./pages/citizen/MyReports";
 import Profile from "./pages/citizen/Profile";
 
 function App() {
+
     return (
+
         <Routes>
 
             {/* ==========================
                 Citizen Portal
             ========================== */}
-            <Route element={<CitizenLayout />}>
 
+            <Route element={<CitizenLayout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/report" element={<ReportIssue />} />
                 <Route path="/track" element={<TrackIssue />} />
                 <Route path="/my-reports" element={<MyReports />} />
                 <Route path="/profile" element={<Profile />} />
-
             </Route>
 
             {/* ==========================
                 Government Portal
             ========================== */}
+
             <Route path="/admin" element={<GovernmentLayout />}>
 
                 <Route index element={<Dashboard />} />
 
                 <Route path="pending" element={<Pending />} />
+
                 <Route path="in-progress" element={<InProgress />} />
+
                 <Route path="resolved" element={<Resolved />} />
 
                 <Route path="departments" element={<Departments />} />
-                <Route path="departments/:department" element={<DepartmentDetails />} />
+
+                {/* Department drill-down page */}
+                <Route
+                    path="departments/:department"
+                    element={<DepartmentDetails />}
+                />
 
                 <Route path="issue/:id" element={<IssueDetails />} />
-
-                {/* 🔥 FIXED: Heatmap is now inside admin */}
-                <Route path="heatmap" element={<Heatmap />} />
 
             </Route>
 
         </Routes>
+
     );
+
 }
 
 export default App;
