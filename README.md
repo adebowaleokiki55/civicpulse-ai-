@@ -1,29 +1,31 @@
+
+
 # 🚀 CivicPulse AI — Government Civic Issue Management System
 
-CivicPulse AI is an **AI-powered civic issue reporting and management system** designed to help citizens report community problems and enable government agencies to classify, route, and resolve them efficiently.
+CivicPulse AI is an AI-powered civic issue reporting and management system designed to help citizens report community problems and enable government agencies to classify, route, and resolve them efficiently.
 
-The system uses **FastAPI + PostgreSQL (backend)** and **React (frontend)** with AI classification powered by **Google Gemini**.
+It uses FastAPI (backend), React (frontend), PostgreSQL/SQLite, and Google Gemini AI for intelligent issue classification.
 
----
+------------------------------------------------------------
+✨ FEATURES
+------------------------------------------------------------
 
-# ✨ Features
-
-## 👨‍👩‍👧 Citizen Portal
+👨‍👩‍👧 CITIZEN PORTAL
 - Report civic issues (road, electricity, flood, waste, etc.)
 - Upload images of issues
-- Auto-location detection (GPS)
-- AI-generated:
+- Auto GPS location detection
+- AI-powered:
   - Category classification
   - Severity detection
   - Department routing
 - Track submitted issues
 - View personal report history
 
----
+------------------------------------------------------------
 
-## 🏛 Government Portal
+🏛 GOVERNMENT PORTAL
 
-### 📊 Dashboard
+📊 Dashboard
 - Total issues overview
 - Pending issues
 - Assigned issues
@@ -31,75 +33,154 @@ The system uses **FastAPI + PostgreSQL (backend)** and **React (frontend)** with
 - Resolved issues
 - Rejected issues
 
-### 🏢 Department System
-- Automatic issue routing to departments
-- Department-based workload tracking
-- Department drill-down view (issues per department)
+🏢 Department System
+- Automatic AI routing to departments
+- Department workload tracking
+- Department drill-down pages
 
-### 🔄 Issue Workflow
+🔄 Issue Workflow
 - Assign issues to officers
 - Start work on issues
 - Resolve issues with notes
 - Reject issues with reasons
 
----
+------------------------------------------------------------
 
-## 🤖 AI System
-Powered by Google Gemini AI:
+🤖 AI SYSTEM (GEMINI POWERED)
+
 - Smart issue classification
 - Severity detection (Low / Medium / High)
 - Keyword + rule-based fallback system
-- Automatic routing to government departments
+- Confidence scoring
+- Automatic routing to departments
 
----
+------------------------------------------------------------
 
-# 🏗 Tech Stack
+🏗 TECH STACK
 
-## Frontend
+Frontend:
 - React.js
 - React Router DOM
 - Tailwind CSS
-- Lucide / React Icons
 - Axios
+- Lucide / React Icons
 
-## Backend
+Backend:
 - FastAPI
 - SQLAlchemy
 - PostgreSQL / SQLite
-- Google Generative AI (Gemini)
+- Google Gemini AI
 
----
+------------------------------------------------------------
 
-# 🧠 AI Classification Logic
+🧠 AI LOGIC FLOW
 
-The system uses a hybrid AI engine:
+1. Rule-based keyword detection
+2. Gemini AI classification
+3. Severity estimation
+4. Department routing
 
-### 1. Rule-Based System
-- Keyword matching for:
-  - Electricity
-  - Road
-  - Flood
-  - Waste
-  - Water
-  - Security
-  - Health
+------------------------------------------------------------
 
-### 2. Gemini AI Model
-- Context understanding
-- Category prediction
-- Severity estimation
-- Confidence scoring
+🏢 DEPARTMENT ROUTING
 
-### 3. Routing System
-Automatically routes issues to departments:
+Road → Works Department  
+Flood → Water Resources  
+Waste → Sanitation  
+Electricity → Power Distribution  
+Water → Water Board  
+Security → Security Agency  
+Health → Health Department  
 
-- Road → Works Department
-- Electricity → Power Distribution
-- Water → Water Board
-- Waste → Sanitation
-- Security → Security Agency
-- Health → Health Department
+------------------------------------------------------------
 
----
+📁 PROJECT STRUCTURE
 
-# 📁 Project Structure
+CivicPulse/
+│
+├── backend/
+│   ├── app/
+│   │   ├── routes/
+│   │   │   ├── government.py
+│   │   │   ├── issues.py
+│   │   ├── services/
+│   │   │   ├── ai.py
+│   │   │   ├── routing.py
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── db/
+│   │   └── main.py
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Departments.jsx
+│   │   │   ├── DepartmentDetails.jsx
+│   │   │   ├── IssueDetails.jsx
+│   │   │   ├── citizen/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   ├── services/
+│   │   └── App.jsx
+
+------------------------------------------------------------
+
+⚙️ SETUP
+
+Backend:
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+
+Frontend:
+cd frontend
+npm install
+npm run dev
+
+------------------------------------------------------------
+
+🔑 ENV FILE (.env)
+
+GEMINI_API_KEY=your_key_here
+DATABASE_URL=your_database_url
+
+------------------------------------------------------------
+
+🔥 API ENDPOINTS
+
+Government:
+GET    /government/dashboard
+GET    /government/pending
+GET    /government/assigned
+GET    /government/in-progress
+GET    /government/resolved
+PUT    /government/assign/{id}
+PUT    /government/status/{id}
+PUT    /government/resolve/{id}
+PUT    /government/reject/{id}
+GET    /government/department/{name}
+
+Citizen:
+POST   /issues/
+GET    /issues/
+
+------------------------------------------------------------
+
+🚀 FUTURE IMPROVEMENTS
+- Heatmap visualization
+- Real-time notifications
+- Mobile app version
+- SMS reporting system
+- Predictive AI issue detection
+
+------------------------------------------------------------
+
+👨‍💻 AUTHOR
+
+Built by: Team UrbanLogic
+Project: CivicPulse AI  
+Status: Active Development 🚧
+
