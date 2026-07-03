@@ -1,5 +1,5 @@
-
-
+🌐 Live Demo(Citizen):https://civicpulse-ai-65le.vercel.app/
+🌐 Live Demo(Government):https://civicpulse-ai-65le.vercel.app/admin
 # 🚀 CivicPulse AI — Government Civic Issue Management System
 
 CivicPulse AI is an AI-powered civic issue reporting and management system designed to help citizens report community problems and enable government agencies to classify, route, and resolve them efficiently.
