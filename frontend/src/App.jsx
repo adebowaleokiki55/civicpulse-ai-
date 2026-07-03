@@ -11,6 +11,7 @@ import Resolved from "./pages/Resolved";
 import Departments from "./pages/Departments";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import IssueDetails from "./pages/IssueDetails";
+import IssueHeatmap from "./pages/IssueHeatmap";
 
 // Citizen Pages
 import Home from "./pages/citizen/Home";
@@ -50,6 +51,8 @@ function App() {
                 <Route path="in-progress" element={<InProgress />} />
 
                 <Route path="resolved" element={<Resolved />} />
+
+                <Route path="heatmap" element={<IssueHeatmap />} />
 
                 <Route path="departments" element={<Departments />} />
 

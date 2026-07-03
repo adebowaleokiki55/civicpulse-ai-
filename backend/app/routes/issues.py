@@ -71,6 +71,7 @@ def create_issue(
         category, severity, department, confidence = analyze_issue(
             title,
             description,
+            location,
         )
 
         

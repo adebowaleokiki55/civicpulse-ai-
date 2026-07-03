@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
@@ -51,6 +52,17 @@ def dashboard(db: Session = Depends(get_db)):
         Issue.severity == "High"
     ).count()
 
+    trending_issues = (
+        db.query(
+            Issue.category,
+            func.count(Issue.id).label("count")
+        )
+        .group_by(Issue.category)
+        .order_by(func.count(Issue.id).desc())
+        .limit(5)
+        .all()
+    )
+
     return {
         # ✅ FIXED: match frontend expectations
         "total": total,
@@ -60,6 +72,13 @@ def dashboard(db: Session = Depends(get_db)):
         "resolved": resolved,
         "rejected": rejected,
         "high_priority": high_priority,
+        "trending_issues": [
+            {
+                "name": category or "Uncategorized",
+                "count": count,
+            }
+            for category, count in trending_issues
+        ],
     }
 
 # ======================================================

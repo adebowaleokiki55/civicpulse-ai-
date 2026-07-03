@@ -91,7 +91,7 @@ function IssueTable({
                             <tr>
                                 <th className="px-6 py-4 text-left">ID</th>
                                 <th className="px-6 py-4 text-left">Title</th>
-                                <th className="px-6 py-4 text-left">Department</th>
+                                <th className="px-6 py-4 text-left">Parastatal / Institution</th>
                                 <th className="px-6 py-4 text-left">Severity</th>
                                 <th className="px-6 py-4 text-left">Status</th>
                                 <th className="px-6 py-4 text-left">Officer</th>

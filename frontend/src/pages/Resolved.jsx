@@ -61,7 +61,7 @@ function Resolved() {
 
                 <p className="mt-2 text-green-100">
 
-                    Issues successfully completed by government departments.
+                    Issues successfully completed by government institutions.
 
                 </p>
 
@@ -105,7 +105,7 @@ function Resolved() {
 
                     <p className="text-slate-500">
 
-                        Departments
+                        Institutions
 
                     </p>
 

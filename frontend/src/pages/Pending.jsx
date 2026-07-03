@@ -147,7 +147,7 @@ function Pending() {
 
                         <p className="text-slate-500">
 
-                            Departments
+                            Institutions
 
                         </p>
 

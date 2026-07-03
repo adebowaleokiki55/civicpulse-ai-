@@ -1,4 +1,12 @@
 import { NavLink } from "react-router-dom";
+import {
+    Building2,
+    CheckCircle2,
+    CircleDot,
+    Clock,
+    LayoutDashboard,
+    MapPinned
+} from "lucide-react";
 
 function Sidebar() {
 
@@ -6,31 +14,37 @@ function Sidebar() {
 
         {
             title: "Dashboard",
-            icon: "📊",
+            icon: LayoutDashboard,
             path: "/admin"
         },
 
         {
             title: "Pending",
-            icon: "🟡",
+            icon: CircleDot,
             path: "/admin/pending"
         },
 
         {
             title: "In Progress",
-            icon: "🟣",
+            icon: Clock,
             path: "/admin/in-progress"
         },
 
         {
             title: "Resolved",
-            icon: "🟢",
+            icon: CheckCircle2,
             path: "/admin/resolved"
         },
 
         {
-            title: "Departments",
-            icon: "🏢",
+            title: "Heatmap",
+            icon: MapPinned,
+            path: "/admin/heatmap"
+        },
+
+        {
+            title: "Institutions",
+            icon: Building2,
             path: "/admin/departments"
         }
 
@@ -56,7 +70,11 @@ function Sidebar() {
 
                 {
 
-                    menu.map(item => (
+                    menu.map(item => {
+
+                        const Icon = item.icon;
+
+                        return (
 
                         <NavLink
 
@@ -79,7 +97,7 @@ function Sidebar() {
                         >
 
                             <span className="text-xl">
-                                {item.icon}
+                                <Icon size={21} />
                             </span>
 
                             <span>
@@ -88,7 +106,9 @@ function Sidebar() {
 
                         </NavLink>
 
-                    ))
+                    );
+
+                    })
 
                 }
 

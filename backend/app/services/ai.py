@@ -1,4 +1,10 @@
-import google.generativeai as genai
+try:
+
+    import google.generativeai as genai
+
+except ImportError:
+
+    genai = None
 
 from app.services.routing import route_department
 
@@ -20,17 +26,15 @@ API_KEY = settings.GEMINI_API_KEY
 
 
 
-if not API_KEY:
+if API_KEY and genai is not None:
 
-    raise ValueError("GEMINI_API_KEY is missing")
+    genai.configure(api_key=API_KEY)
 
+    model = genai.GenerativeModel("gemini-2.5-flash")
 
+else:
 
-genai.configure(api_key=API_KEY)
-
-
-
-model = genai.GenerativeModel("gemini-2.5-flash")
+    model = None
 
 
 
@@ -204,9 +208,9 @@ HIGH_SEVERITY = [
 
 
 
-def normalize(title: str, description: str):
+def normalize(title: str, description: str, location: str | None = None):
 
-    return f"{title or ''} {description or ''}".strip().lower()
+    return f"{title or ''} {description or ''} {location or ''}".strip().lower()
 
 
 
@@ -260,19 +264,48 @@ def extract_int(text: str, default=50):
 
 
 
-def ai_engine(text: str):
+def clean_institution(value: str | None):
+
+    if not value:
+
+        return None
+
+    value = value.strip()
+
+    if value.lower() in {"none", "unknown", "n/a", "not sure"}:
+
+        return None
+
+    return value
+
+
+def ai_engine(text: str, location: str | None = None):
+
+    if model is None:
+
+        if genai is None:
+
+            print("Gemini skipped: google-generativeai package is not installed")
+
+        else:
+
+            print("Gemini skipped: GEMINI_API_KEY is missing")
+
+        return None, None, 40, None
 
     prompt = f"""
 
-You are a Nigerian civic issue classifier.
+You are a Nigerian civic issue classifier and government routing assistant.
 
 
 
-Classify this report.
+Classify this report and identify the most appropriate Nigerian government institution/parastatal to handle it.
 
 
 
 {text}
+
+Location, if provided: {location or "Unknown"}
 
 
 
@@ -308,6 +341,12 @@ Severity: Low | Medium | High
 
 Confidence: 0-100
 
+Institution: the specific Nigerian government ministry, agency, commission, authority, force, board, or parastatal responsible.
+
+Prefer specific institutions such as FERMA, NEMA, NERC, NCDC, Nigeria Police Force, Federal Fire Service, State Ministry of Works, State Ministry of Environment, State Waste Management Authority, State Water Corporation, State Ministry of Health, or a location-specific agency when the location makes it clear.
+
+If the report is local/state-level and no state is known, use the appropriate "State ..." institution.
+
 
 
 Format:
@@ -319,6 +358,8 @@ Category: ...
 Severity: ...
 
 Confidence: ...
+
+Institution: ...
 
 """
 
@@ -350,6 +391,8 @@ Confidence: ...
 
         confidence = 50
 
+        institution = None
+
 
 
         for line in output.splitlines():
@@ -378,7 +421,13 @@ Confidence: ...
 
 
 
-        return category, severity, confidence
+            elif lower.startswith("institution") or lower.startswith("parastatal") or lower.startswith("agency"):
+
+                institution = clean_institution(line.split(":", 1)[-1])
+
+
+
+        return category, severity, confidence, institution
 
 
 
@@ -390,7 +439,7 @@ Confidence: ...
 
 
 
-        return None, None, 40
+        return None, None, 40, None
 
 
 
@@ -404,11 +453,11 @@ Confidence: ...
 
 
 
-def analyze_issue(title: str, description: str):
+def analyze_issue(title: str, description: str, location: str | None = None):
 
 
 
-    text = normalize(title, description)
+    text = normalize(title, description, location)
 
 
 
@@ -416,7 +465,7 @@ def analyze_issue(title: str, description: str):
 
 
 
-    ai_category, ai_severity, confidence = ai_engine(text)
+    ai_category, ai_severity, confidence, ai_institution = ai_engine(text, location)
 
 
 
@@ -444,7 +493,7 @@ def analyze_issue(title: str, description: str):
 
 
 
-    department = route_department(category)
+    department = ai_institution or route_department(category, text, location)
 
 
 
@@ -479,4 +528,3 @@ def analyze_issue(title: str, description: str):
         confidence,
 
     ) 
-

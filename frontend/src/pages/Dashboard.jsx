@@ -18,6 +18,8 @@ function Dashboard() {
 
     const [loading, setLoading] = useState(true);
 
+    const [trendingIssues, setTrendingIssues] = useState([]);
+
     const [stats, setStats] = useState({
 
         total: 0,
@@ -42,6 +44,7 @@ function Dashboard() {
             const res = await api.get("/government/dashboard");
 
             setStats(res.data);
+            setTrendingIssues(res.data.trending_issues || []);
 
         }
 
@@ -159,6 +162,45 @@ function Dashboard() {
 
                 />
 
+            </div>
+
+            <div className="mt-10 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+                <div className="p-6 border-b border-slate-100">
+                    <h2 className="text-2xl font-bold text-slate-800">Trending Issues</h2>
+                    <p className="text-slate-500 mt-1">
+                        Most reported issue types based on current submissions.
+                    </p>
+                </div>
+
+                <div className="divide-y divide-slate-100">
+                    {trendingIssues.length === 0 ? (
+                        <div className="p-6 text-slate-500">
+                            No issue data available yet.
+                        </div>
+                    ) : (
+                        trendingIssues.map((issue, index) => (
+                            <div key={`${issue.name}-${index}`} className="p-6 flex items-center justify-between gap-4">
+                                <div>
+                                    <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">
+                                        #{index + 1}
+                                    </p>
+                                    <h3 className="text-lg font-bold text-slate-900 mt-1">
+                                        {issue.name}
+                                    </h3>
+                                </div>
+
+                                <div className="text-right">
+                                    <p className="text-3xl font-black text-blue-700">
+                                        {issue.count}
+                                    </p>
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                                        Reports
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
             </div>
 
         </div>

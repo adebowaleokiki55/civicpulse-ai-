@@ -334,7 +334,7 @@ function IssueDetails() {
 
                                 <span className="text-slate-500">
 
-                                    Department
+                                    Parastatal / Institution
 
                                 </span>
 
@@ -517,7 +517,7 @@ function IssueDetails() {
 
                                     <p className="text-sm text-slate-500">
 
-                                        Government department is handling the issue.
+                                        Government institution is handling the issue.
 
                                     </p>
 

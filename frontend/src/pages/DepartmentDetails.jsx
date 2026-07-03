@@ -58,10 +58,10 @@ function DepartmentDetails() {
             {/* HEADER */}
             <div className="bg-gradient-to-r from-indigo-700 to-blue-600 text-white p-8 rounded-2xl shadow-xl">
                 <h1 className="text-4xl font-bold">
-                    {department} Department
+                    {department}
                 </h1>
                 <p className="mt-2 text-blue-100">
-                    Manage all civic issues assigned to this department
+                    Manage all civic issues assigned to this institution
                 </p>
             </div>
 

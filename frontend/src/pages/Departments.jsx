@@ -124,13 +124,13 @@ async function loadDepartments() {
 
                 <h1 className="text-4xl font-bold">
 
-                    Government Departments
+                    Government Institutions
 
                 </h1>
 
                 <p className="mt-2 text-blue-100">
 
-                    Monitor workload and performance across every department.
+                    Monitor workload and performance across every tagged parastatal.
 
                 </p>
 
