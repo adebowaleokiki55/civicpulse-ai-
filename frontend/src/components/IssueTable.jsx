@@ -6,325 +6,148 @@ import StatusBadge from "./StatusBadge";
 import ConfirmDialog from "./ConfirmDialog";
 
 function IssueTable({
-
     issues = [],
-
     mode = "pending",
-
     refresh
-
 }) {
 
     const [dialogOpen, setDialogOpen] = useState(false);
-
     const [dialogType, setDialogType] = useState("");
-
     const [selectedIssue, setSelectedIssue] = useState(null);
-
     const [loading, setLoading] = useState(false);
 
-    function openAssign(issue) {
-
-        setSelectedIssue(issue);
-
-        setDialogType("assign");
-
-        setDialogOpen(true);
-
-    }
-
     function openResolve(issue) {
-
         setSelectedIssue(issue);
-
         setDialogType("resolve");
-
         setDialogOpen(true);
-
     }
 
     function openReject(issue) {
-
         setSelectedIssue(issue);
-
         setDialogType("reject");
-
         setDialogOpen(true);
-
     }
 
     async function handleConfirm(value) {
-
         try {
-
             setLoading(true);
 
-            if (dialogType === "assign") {
-
+            if (dialogType === "resolve") {
                 await api.put(
-
-                    `/government/assign/${selectedIssue.id}`,
-
-                    {
-
-                        assigned_to: value
-
-                    }
-
-                );
-
-            }
-
-            else if (dialogType === "resolve") {
-
-                await api.put(
-
                     `/government/resolve/${selectedIssue.id}`,
-
                     {
-
                         resolution_notes: value
-
                     }
-
                 );
-
             }
 
             else if (dialogType === "reject") {
-
                 await api.put(
-
                     `/government/reject/${selectedIssue.id}`,
-
                     {
-
                         resolution_notes: value
-
                     }
-
                 );
-
             }
 
             setDialogOpen(false);
-
             if (refresh) refresh();
 
-        }
-
-        catch (err) {
-
+        } catch (err) {
             console.error(err);
-
             alert("Operation failed.");
-
-        }
-
-        finally {
-
+        } finally {
             setLoading(false);
-
         }
-
     }
 
     async function startWork(issue) {
-
         try {
-
             setLoading(true);
 
             await api.put(
-
                 `/government/status/${issue.id}`,
-
                 {
-
                     status: "In Progress"
-
                 }
-
             );
 
             if (refresh) refresh();
 
-        }
-
-        catch (err) {
-
+        } catch (err) {
             console.log(err);
-
-        }
-
-        finally {
-
+        } finally {
             setLoading(false);
-
         }
-
     }
 
     return (
-
         <>
-
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-
                 <div className="overflow-x-auto">
-
                     <table className="min-w-full">
 
                         <thead className="bg-slate-100">
-
                             <tr>
-
-                                <th className="px-6 py-4 text-left">
-
-                                    ID
-
-                                </th>
-
-                                <th className="px-6 py-4 text-left">
-
-                                    Title
-
-                                </th>
-
-                                <th className="px-6 py-4 text-left">
-
-                                    Department
-
-                                </th>
-
-                                <th className="px-6 py-4 text-left">
-
-                                    Severity
-
-                                </th>
-
-                                <th className="px-6 py-4 text-left">
-
-                                    Status
-
-                                </th>
-
-                                <th className="px-6 py-4 text-left">
-
-                                    Officer
-
-                                </th>
-
-                                <th className="px-6 py-4 text-center">
-
-                                    Actions
-
-                                </th>
-
+                                <th className="px-6 py-4 text-left">ID</th>
+                                <th className="px-6 py-4 text-left">Title</th>
+                                <th className="px-6 py-4 text-left">Department</th>
+                                <th className="px-6 py-4 text-left">Severity</th>
+                                <th className="px-6 py-4 text-left">Status</th>
+                                <th className="px-6 py-4 text-left">Officer</th>
+                                <th className="px-6 py-4 text-center">Actions</th>
                             </tr>
-
                         </thead>
 
                         <tbody>
-
-                            {
-
-                                issues.length === 0 ?
-
-                                (
-
-                                    <tr>
-
-                                        <td
-
-                                            colSpan={7}
-
-                                            className="text-center py-16 text-slate-500"
-
-                                        >
-
-                                            No issues found.
-
-                                        </td>
-
-                                    </tr>
-
-                                )
-
-                                :
-
+                            {issues.length === 0 ? (
+                                <tr>
+                                    <td colSpan={7} className="text-center py-16 text-slate-500">
+                                        No issues found.
+                                    </td>
+                                </tr>
+                            ) : (
                                 issues.map(issue => (
+                                    <tr key={issue.id} className="border-t hover:bg-slate-50">
 
-                                    <tr
-
-                                        key={issue.id}
-
-                                        className="border-t hover:bg-slate-50"
-
-                                    >
+                                        <td className="px-6 py-5">#{issue.id}</td>
 
                                         <td className="px-6 py-5">
-
-                                            #{issue.id}
-
-                                        </td>
-
-                                        <td className="px-6 py-5">
-
                                             <div>
-
                                                 <h3 className="font-semibold">
-
                                                     {issue.title}
-
                                                 </h3>
-
                                                 <p className="text-sm text-slate-500 truncate max-w-sm">
-
                                                     {issue.description}
-
                                                 </p>
-
                                             </div>
-
                                         </td>
 
                                         <td className="px-6 py-5">
-
                                             {issue.department}
-
                                         </td>
 
-                                        <td className="px-6 py-5">                                            <span
-                                                className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                                    issue.severity === "High"
-                                                        ? "bg-red-100 text-red-700"
-                                                        : issue.severity === "Medium"
-                                                        ? "bg-yellow-100 text-yellow-700"
-                                                        : "bg-green-100 text-green-700"
-                                                }`}
-                                            >
+                                        <td className="px-6 py-5">
+                                            <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                                                issue.severity === "High"
+                                                    ? "bg-red-100 text-red-700"
+                                                    : issue.severity === "Medium"
+                                                    ? "bg-yellow-100 text-yellow-700"
+                                                    : "bg-green-100 text-green-700"
+                                            }`}>
                                                 {issue.severity}
                                             </span>
-
                                         </td>
 
                                         <td className="px-6 py-5">
-
-                                            <StatusBadge
-                                                status={issue.status}
-                                            />
-
+                                            <StatusBadge status={issue.status} />
                                         </td>
 
                                         <td className="px-6 py-5">
-
                                             {issue.assigned_to || "-"}
-
                                         </td>
 
                                         <td className="px-6 py-5">
-
                                             <div className="flex flex-wrap gap-2 justify-center">
 
                                                 <Link
@@ -334,114 +157,78 @@ function IssueTable({
                                                     View
                                                 </Link>
 
-                                                {mode === "pending" && (
-
-                                                    <button
-                                                        onClick={() => openAssign(issue)}
-                                                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
-                                                    >
-                                                        Assign
-                                                    </button>
-
-                                                )}
-
-                                                {mode === "assigned" && (
-
-                                                    <button
-                                                        onClick={() => startWork(issue)}
-                                                        className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
-                                                    >
-                                                        Start Work
-                                                    </button>
-
-                                                )}
-
-                                                {mode === "progress" && (
-
+                                                {mode === "department" && (
                                                     <>
-                                                        <button
-                                                            onClick={() => openResolve(issue)}
-                                                            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition"
-                                                        >
-                                                            Resolve
-                                                        </button>
+                                                        {issue.status === "Pending" && (
+                                                            <button
+                                                                onClick={() => startWork(issue)}
+                                                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+                                                            >
+                                                                Start Work
+                                                            </button>
+                                                        )}
 
-                                                        <button
-                                                            onClick={() => openReject(issue)}
-                                                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
-                                                        >
-                                                            Reject
-                                                        </button>
+                                                        {issue.status === "In Progress" && (
+                                                            <>
+                                                                <button
+                                                                    onClick={() => openResolve(issue)}
+                                                                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition"
+                                                                >
+                                                                    Resolve
+                                                                </button>
+
+                                                                <button
+                                                                    onClick={() => openReject(issue)}
+                                                                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
+                                                                >
+                                                                    Reject
+                                                                </button>
+                                                            </>
+                                                        )}
                                                     </>
-
                                                 )}
 
                                             </div>
-
                                         </td>
 
                                     </tr>
-
                                 ))
-
-                            }
-
+                            )}
                         </tbody>
 
                     </table>
-
                 </div>
-
             </div>
 
             <ConfirmDialog
-
                 open={dialogOpen}
-
                 title={
-                    dialogType === "assign"
-                        ? "Assign Officer"
-                        : dialogType === "resolve"
+                    dialogType === "resolve"
                         ? "Resolve Issue"
                         : "Reject Issue"
                 }
-
                 message={
-                    dialogType === "assign"
-                        ? "Enter the officer responsible for this issue."
-                        : dialogType === "resolve"
+                    dialogType === "resolve"
                         ? "Describe how the issue was resolved."
                         : "Enter the reason for rejecting this issue."
                 }
-
                 placeholder={
-                    dialogType === "assign"
-                        ? "Officer name..."
-                        : dialogType === "resolve"
+                    dialogType === "resolve"
                         ? "Resolution notes..."
                         : "Reason for rejection..."
                 }
-
                 confirmText={
                     loading
                         ? "Please wait..."
-                        : dialogType === "assign"
-                        ? "Assign"
                         : dialogType === "resolve"
                         ? "Resolve"
                         : "Reject"
                 }
-
                 onCancel={() => setDialogOpen(false)}
-
                 onConfirm={handleConfirm}
-
             />
-
         </>
-
     );
-
 }
 
 export default IssueTable;

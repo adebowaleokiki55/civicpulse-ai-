@@ -5,63 +5,33 @@ function Sidebar() {
     const menu = [
 
         {
-
             title: "Dashboard",
-
             icon: "📊",
-
             path: "/admin"
-
         },
 
         {
-
             title: "Pending",
-
             icon: "🟡",
-
             path: "/admin/pending"
-
         },
 
         {
-
-            title: "Assigned",
-
-            icon: "🔵",
-
-            path: "/admin/assigned"
-
-        },
-
-        {
-
             title: "In Progress",
-
             icon: "🟣",
-
             path: "/admin/in-progress"
-
         },
 
         {
-
             title: "Resolved",
-
             icon: "🟢",
-
             path: "/admin/resolved"
-
         },
 
         {
-
             title: "Departments",
-
             icon: "🏢",
-
             path: "/admin/departments"
-
         }
 
     ];
@@ -73,15 +43,11 @@ function Sidebar() {
             <div className="p-8 border-b border-slate-700">
 
                 <h1 className="text-3xl font-bold text-blue-400">
-
                     CivicPulse AI
-
                 </h1>
 
                 <p className="text-slate-400 mt-2">
-
                     Government Portal
-
                 </p>
 
             </div>
@@ -107,20 +73,17 @@ function Sidebar() {
                                         ? "bg-blue-600 text-white shadow-lg"
                                         : "hover:bg-slate-800 text-slate-300"
                                 }`
+
                             }
 
                         >
 
                             <span className="text-xl">
-
                                 {item.icon}
-
                             </span>
 
                             <span>
-
                                 {item.title}
-
                             </span>
 
                         </NavLink>
