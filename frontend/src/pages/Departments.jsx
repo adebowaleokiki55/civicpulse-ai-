@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 import api from "../services/api";
 
 import Loading from "../components/Loading";
@@ -144,10 +144,12 @@ async function loadDepartments() {
 
                         ([department, stats]) => (
 
-                            <div
+                            <Link
 
                                 key={department}
 
+                                to={`/admin/departments/${encodeURIComponent(department)}`}
+                                
                                 className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition"
 
                             >
@@ -266,7 +268,7 @@ async function loadDepartments() {
 
                                 </div>
 
-                            </div>
+                            </Link>
 
                         )
 

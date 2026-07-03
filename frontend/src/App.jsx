@@ -10,6 +10,7 @@ import Assigned from "./pages/Assigned";
 import InProgress from "./pages/InProgress";
 import Resolved from "./pages/Resolved";
 import Departments from "./pages/Departments";
+import DepartmentDetails from "./pages/DepartmentDetails";
 import IssueDetails from "./pages/IssueDetails";
 
 // Citizen Pages
@@ -95,6 +96,11 @@ function App() {
                 <Route
                     path="departments"
                     element={<Departments />}
+                />
+
+                <Route
+                    path="departments/:department"
+                    element={<DepartmentDetails />}
                 />
 
                 <Route
