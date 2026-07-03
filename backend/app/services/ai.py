@@ -167,6 +167,10 @@ Confidence: ...
 
         output = response.text.strip()
 
+        print("\n========== GEMINI RAW RESPONSE ==========")
+        print(output)
+        print("=========================================\n")
+
         category = None
         severity = "Medium"
         confidence = 50
@@ -218,6 +222,16 @@ def analyze_issue(title: str, description: str):
         severity = "High"
 
     department = route_department(category)
+
+    print("\n========== FINAL AI RESULT ==========")
+    print("Title:", title)
+    print("Rule Category:", rule_category)
+    print("AI Category:", ai_category)
+    print("Final Category:", category)
+    print("Severity:", severity)
+    print("Department:", department)
+    print("Confidence:", confidence)
+    print("=====================================\n")
 
     return (
         category,
