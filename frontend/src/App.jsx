@@ -11,7 +11,7 @@ import Resolved from "./pages/Resolved";
 import Departments from "./pages/Departments";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import IssueDetails from "./pages/IssueDetails";
-import Heatmap from "./pages/Heatmap";
+
 
 // Citizen Pages
 import Home from "./pages/citizen/Home";
